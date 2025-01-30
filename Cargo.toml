@@ -1,0 +1,15 @@
+[package]
+name = "ndp-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+pnet = "0"
+serde = { version = "1.0.217", features = ["derive"] }
+toml = "0.8.19"
+
+[profile.release]
+opt-level = 3
+lto = true

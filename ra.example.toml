@@ -1,0 +1,26 @@
+cur_hop_limit = 0 
+managed_address_configuration = false
+other_stateful_configuration = false
+router_lifetime = 0
+reachable_time = 0
+retrans_timer = 0
+
+[[prefix]]
+on_link = false
+autonomous_address_configuration = false
+valid_lifetime = 3600
+preferred_lifetime = 60
+prefix = "fd36:22ce:6c87::/64"
+
+[[mtu]]
+mtu = 1500
+
+[[route]]
+lifetime = 3600
+prefix = "fd36:22ce:6c87:1::/64"
+
+[[dns_server]]
+lifetime = 3600
+addresses = [
+    "fd36:22ce:6c87::1"
+]
