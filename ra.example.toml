@@ -1,6 +1,9 @@
 cur_hop_limit = 0 
 managed_address_configuration = false
 other_stateful_configuration = false
+home_agent = false
+default_router_preference = 0
+nd_proxy = false
 router_lifetime = 0
 reachable_time = 0
 retrans_timer = 0

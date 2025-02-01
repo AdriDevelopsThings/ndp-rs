@@ -21,6 +21,12 @@ pub struct RouterAdvertismentConfig {
     pub managed_address_configuration: bool,
     #[serde(default = "default_false")]
     pub other_stateful_configuration: bool,
+    #[serde(default = "default_false")]
+    pub home_agent: bool,
+    #[serde(default = "default_zero_u8")]
+    pub default_router_preference: u8,
+    #[serde(default = "default_false")]
+    pub nd_proxy: bool,
     #[serde(default = "default_zero_u16")]
     pub router_lifetime: u16,
     #[serde(default = "default_zero_u32")]

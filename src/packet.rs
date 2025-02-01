@@ -139,6 +139,14 @@ pub fn prepare_pkt_ndp_router_advertisment(
     if args.other_stateful_configuration {
         flags |= 0x40;
     }
+    if args.home_agent {
+        flags |= 0x20;
+    }
+    if args.nd_proxy {
+        flags |= 0x04;
+    }
+
+    flags |= (args.default_router_preference & 0x3) << 3;
 
     pkt.set_icmpv6_type(Icmpv6Types::RouterAdvert);
     pkt.set_hop_limit(args.cur_hop_limit.to_be());
@@ -211,7 +219,10 @@ pub fn prepare_pkt_ndp_router_advertisment(
             .parse()
             .with_context(|| format!("Invalid ipv6 address {}", option.prefix))?;
 
-        let prefix_len_octs = (((prefix_len - 1) / 64) + 1) as usize;
+        let prefix_len_octs = match prefix_len {
+            0 => 0,
+            _ => (((prefix_len - 1) / 64) + 1) as usize,
+        };
         let prefix_len_bytes = prefix_len_octs * 8;
 
         let length = PKT_NDP_OPT_SIZE + PKT_NDP_OPT_ROUTE_INFORMATION_SIZE + prefix_len_bytes;
@@ -220,7 +231,7 @@ pub fn prepare_pkt_ndp_router_advertisment(
         opt.set_option_type(NdpOptionType(24));
         opt.set_length(1 + prefix_len_octs as u8);
 
-        let flags = (option.preference << 3) & 0x14;
+        let flags = (option.preference & 0x03) << 3;
 
         let mut opt_buffers = vec![0u8; PKT_NDP_OPT_ROUTE_INFORMATION_SIZE + prefix_len_bytes];
         opt_buffers[0] = prefix_len.to_be();
